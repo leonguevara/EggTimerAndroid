@@ -26,7 +26,16 @@ public class MainActivity extends AppCompatActivity {
     Button controlButton;
 
     // We create a CountDownTimer
-    CountDownTimer countDownTimer
+    CountDownTimer countDownTimer;
+
+    public void resetTimer() {
+        timerTextView.setText("00:30");
+        timerSeekBar.setProgress(30);
+        countDownTimer.cancel();
+        controlButton.setText("Go!");
+        timerSeekBar.setEnabled(true);
+        counterIsActive = false;
+    }
 
     // This method will update our TextView in our user interface, reflecting the time remaining
     // before our timer gets off
@@ -80,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onFinish() {
                     // We set the text of our timer to "00:00" and play our horn sound
                     timerTextView.setText("00:00");
+                    resetTimer();
                     MediaPlayer mplayer = MediaPlayer.create(getApplicationContext(), R.raw.airhorn);
                 }
             }.start();
@@ -87,12 +97,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // If we clicked on our button while our counter was active, then we reset our timer
             // and cancel our count down
-            timerTextView.setText("00:30");
-            timerSeekBar.setProgress(30);
-            countDownTimer.cancel();
-            controlButton.setText("Go!");
-            timerSeekBar.setEnabled(true);
-            counterIsActive = false;
+            resetTimer();
         }
     }
 
